@@ -1,5 +1,7 @@
+const API_BASE_URL = 'https://hiremeai-c3in.vercel.app';
+
 export async function streamChat(question, onChunk, signal) {
-  const response = await fetch('/chat', {
+  const response = await fetch(`${API_BASE_URL}/chat`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ question }),
