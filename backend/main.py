@@ -1,6 +1,7 @@
 import os
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
+from fastapi.middleware.cors import CORSMiddleware
 from groq import Groq
 from pathlib import Path
 from dotenv import load_dotenv
@@ -8,6 +9,15 @@ from pydantic import BaseModel
 import json
 
 app = FastAPI()
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins (adjust for production)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 load_dotenv()
 
 my_api_key = os.getenv("GROQ_API_KEY")
