@@ -156,5 +156,12 @@ def home():
 
 @app.post("/chat")
 def chat(request:ChatRequest):
-    return StreamingResponse(ask_candidate(request.question,extracted_resume),media_type="text/plain")
+    return StreamingResponse(
+        ask_candidate(request.question, extracted_resume),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+        }
+    )
     
