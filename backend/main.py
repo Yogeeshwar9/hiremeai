@@ -154,6 +154,10 @@ def home():
         "message":"hiremeai started running!"
     }
 
+@app.options("/chat")
+def options_chat():
+    return {}
+
 @app.post("/chat")
 def chat(request:ChatRequest):
     return StreamingResponse(
