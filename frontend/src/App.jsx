@@ -227,7 +227,7 @@ export default function App() {
       <main className="main">
         <TopBar
           title={active?.title || 'New chat'}
-          subtitle="Candidate profile assistant"
+          subtitle="Yogi's Resume assistant"
           theme={theme}
           onThemeToggle={() =>
             setTheme((value) => (value === 'dark' ? 'light' : 'dark'))

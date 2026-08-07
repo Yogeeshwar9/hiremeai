@@ -10,7 +10,7 @@ export function Welcome({ onPromptClick }) {
     <div className="welcome">
       <div className="welcome-logo">Y</div>
       <h1>How can I help you today?</h1>
-      <p>Ask questions about Yogeeshwar's experience, skills, projects, and education.</p>
+      <p>Ask questions about Yogeeshwar's experience, skills, projects, and education etc.</p>
       <div className="prompt-grid">
         {prompts.map((prompt) => (
           <button key={prompt} onClick={(event) => onPromptClick(event, prompt)}>
