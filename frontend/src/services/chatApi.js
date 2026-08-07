@@ -6,7 +6,7 @@ export async function streamChat(question, onChunk, signal) {
   const response = await axios.post(`${API_BASE_URL}/chat`,
     { question },
     {
-      responseType: 'stream',
+      responseType: 'arraybuffer',
       signal,
     }
   );
@@ -16,21 +16,7 @@ export async function streamChat(question, onChunk, signal) {
   }
 
   const decoder = new TextDecoder();
-  let answer = '';
-
-  return new Promise((resolve, reject) => {
-    response.data.on('data', (chunk) => {
-      answer += decoder.decode(chunk, { stream: true });
-      onChunk(answer);
-    });
-
-    response.data.on('end', () => {
-      answer += decoder.decode();
-      resolve(answer);
-    });
-
-    response.data.on('error', (error) => {
-      reject(error);
-    });
-  });
+  const answer = decoder.decode(response.data);
+  onChunk(answer);
+  return answer;
 }
