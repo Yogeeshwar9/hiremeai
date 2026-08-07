@@ -32,6 +32,7 @@ class Skills(BaseModel):
 
 class Experience(BaseModel):
     experience : str
+    description: str
 
 class Projects(BaseModel):
     name: str
@@ -85,7 +86,7 @@ def parse_resume(text):
         JSON strictly following the schema definitions.
         Example:
         json
-        {{"skills":[{{"skills":"Python"}}],"experiance":[{{"experiance":"3 years at XYZ"}}]}}
+        {{"skills":[{{"skills":"Python"}}]}}
         Zero-shot/One-shot/Few-shots:
         Few-shot: Provide 2–3 examples of extraction and query answering to guide the model.
         Fallback:
@@ -128,6 +129,8 @@ say
    - Put exactly one item per line.
    - Do not add blank lines between items.
    - Do not add an introduction or conclusion unless the user asks for one.
+   7 when any one ask about first mention it has Personal projects are
+   8
 """
     stream = client.chat.completions.create(
         messages=[
