@@ -10,7 +10,7 @@ export const Message = memo(function Message({ message, onCopy, onSpeak, onRate,
         {assistant ? 'AI' : 'YU'}
       </div>
       <div className="message-body">
-        <div className="message-name">{assistant ? "Yogi's AI" : 'You'}</div>
+        <div className="message-name">{assistant ? "Yogi's Resume Assistant" : 'You'}</div>
         <div className="message-text">
           {message.content || (
             <span className="typing">
