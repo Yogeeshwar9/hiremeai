@@ -1,28 +1,36 @@
+import axios from 'axios';
+
 const API_BASE_URL = 'https://hiremeai-c3in.vercel.app';
 
 export async function streamChat(question, onChunk, signal) {
-  const response = await fetch(`${API_BASE_URL}/chat`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ question }),
-    signal,
-  })
+  const response = await axios.post(`${API_BASE_URL}/chat`,
+    { question },
+    {
+      responseType: 'stream',
+      signal,
+    }
+  );
 
-  if (!response.ok || !response.body) {
-    throw new Error('Unable to start the response stream.')
+  if (!response.data) {
+    throw new Error('Unable to start the response stream.');
   }
 
-  const reader = response.body.getReader()
-  const decoder = new TextDecoder()
-  let answer = ''
+  const decoder = new TextDecoder();
+  let answer = '';
 
-  while (true) {
-    const { value, done } = await reader.read()
-    if (done) break
-    answer += decoder.decode(value, { stream: true })
-    onChunk(answer)
-  }
+  return new Promise((resolve, reject) => {
+    response.data.on('data', (chunk) => {
+      answer += decoder.decode(chunk, { stream: true });
+      onChunk(answer);
+    });
 
-  answer += decoder.decode()
-  return answer
+    response.data.on('end', () => {
+      answer += decoder.decode();
+      resolve(answer);
+    });
+
+    response.data.on('error', (error) => {
+      reject(error);
+    });
+  });
 }
