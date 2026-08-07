@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://hiremeai-c3in.vercel.app';
+const API_BASE_URL = 'https://hiremeai-plum.vercel.app';
 
 export async function streamChat(question, onChunk, signal) {
   const response = await axios.post(`${API_BASE_URL}/chat`,
